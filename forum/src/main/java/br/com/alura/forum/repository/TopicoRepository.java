@@ -2,6 +2,8 @@ package br.com.alura.forum.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,7 +16,7 @@ public interface TopicoRepository extends JpaRepository<Topico, Long>{
 	List<Topico> findByTitulo(String nomeCurso);
 
 	//Cria tbm para o atributo Nome da FK(relacionamento) Curso que tem em Topico:
-	List<Topico> findByCurso_Nome(String nomeCurso);
+	Page<Topico> findByCurso_Nome(String nomeCurso, Pageable paginacao);
 	
 	//Nao seguindo o padrao de nomenclatura do Spring
 	//@Query("SELECT t FROM Topico t WHERE t.curso.nome = :nomeCurso")
