@@ -7,8 +7,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import br.com.alura.forum.modelo.Usuario;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 
 @Service
 public class TokenService {
@@ -34,6 +38,20 @@ public class TokenService {
 				.setExpiration(dataExpiracao)
 				.signWith(SignatureAlgorithm.HS256, secret)
 				.compact(); // transforma em String
+	}
+
+
+	public boolean isTokenValido(String token) {
+		
+		try {
+			Jwts.parser()
+			.setSigningKey(this.secret)
+			.parseClaimsJws(token);
+
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 	
 	
